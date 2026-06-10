@@ -18,7 +18,7 @@ const VW = COLS + 1, VH = ROWS + 1;
 
 const DT_DAYS = 0.05;             // sim-days per step
 const STEPS_PER_SEC = 40;         // at 1x speed => 2 days/sec
-const MAX_PUSH = 1.6;             // max border advance, px per day
+const MAX_PUSH = 1.2;             // max border advance, px per day
 const INF_SIGMA = 2.0 * CELL;     // influence falloff of a division
 const DIV_STR = 100;              // strength of a fresh division
 const MEN_PER_STR = 120;          // flavor: men per strength point
@@ -124,8 +124,8 @@ function generateWorld(seedStr) {
     for (let vx = 0; vx < VW; vx++) {
       let x = vx * CELL, y = vy * CELL;
       if (vx > 0 && vx < COLS && vy > 0 && vy < ROWS) {
-        const jx = (noise.fbm(vx * 0.21 + 41.7, vy * 0.21 + 7.3, 4) - 0.5) * 1.15 + (rng() - 0.5) * 0.5;
-        const jy = (noise.fbm(vx * 0.21 + 3.1, vy * 0.21 + 93.2, 4) - 0.5) * 1.15 + (rng() - 0.5) * 0.5;
+        const jx = (noise.fbm(vx * 0.23 + 41.7, vy * 0.23 + 7.3, 4) - 0.5) * 1.5 + (rng() - 0.5) * 0.78;
+        const jy = (noise.fbm(vx * 0.23 + 3.1, vy * 0.23 + 93.2, 4) - 0.5) * 1.5 + (rng() - 0.5) * 0.78;
         x += clamp(jx, -0.46, 0.46) * CELL;
         y += clamp(jy, -0.46, 0.46) * CELL;
       }
@@ -1080,7 +1080,7 @@ function render(tSec) {
     ctx.fill(c._path, 'nonzero');
     const s = sideOf(c.id);
     if (s) {
-      ctx.fillStyle = s === 'red' ? 'rgba(224,68,58,.30)' : 'rgba(63,116,232,.30)';
+      ctx.fillStyle = s === 'red' ? 'rgba(224,68,58,.38)' : 'rgba(63,116,232,.38)';
       ctx.fill(c._path, 'nonzero');
       ctx.strokeStyle = SIDE_COLORS[s];
       ctx.lineWidth = 2.4;
@@ -1320,14 +1320,16 @@ function init() {
 }
 
 /* ================= entry ================= */
+const API = {
+  W, H, CELL, COLS, ROWS, DT_DAYS,
+  state, generateWorld, newWorld, toggleAlleg, canStartWar, startWar, stepSim,
+  computeFronts, loopsArea, pointInLoops, sideOf,
+};
 if (HAS_DOM) {
+  window.__game = API; // for automated testing
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 }
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    W, H, CELL, COLS, ROWS, DT_DAYS,
-    state, generateWorld, newWorld, toggleAlleg, canStartWar, startWar, stepSim,
-    computeFronts, loopsArea, pointInLoops, sideOf,
-  };
+  module.exports = API;
 }
