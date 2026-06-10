@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRONTLINES — fictional war simulator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div id="map-wrap">
+    <canvas id="map"></canvas>
+    <div id="banner" class="hidden"><div id="banner-title"></div><div id="banner-sub"></div></div>
+    <div id="tooltip" class="hidden"></div>
+  </div>
+
+  <aside id="panel">
+    <header>
+      <h1>FRONTLINES</h1>
+      <p class="sub">fictional war simulator</p>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <span class="label">World seed</span>
+        <span id="seed" class="mono"></span>
+      </div>
+      <button id="btn-new" class="btn ghost">&#10227; New World</button>
+    </section>
+
+    <section class="card" id="setup-card">
+      <h2>Belligerents</h2>
+      <p class="hint">Click a nation to cycle:
+        <b class="red">Crimson Pact</b> &rarr; <b class="blue">Azure League</b> &rarr; neutral.
+        You only pick the sides &mdash; the war fights itself.</p>
+      <div class="side red">
+        <h3>Crimson Pact</h3>
+        <div id="chips-red" class="chips"><span class="empty">&mdash; none &mdash;</span></div>
+      </div>
+      <div class="side blue">
+        <h3>Azure League</h3>
+        <div id="chips-blue" class="chips"><span class="empty">&mdash; none &mdash;</span></div>
+      </div>
+      <button id="btn-war" class="btn war" disabled>&#9876; Declare War</button>
+      <p id="warn" class="warn hidden"></p>
+    </section>
+
+    <section class="card">
+      <h2>Time</h2>
+      <div id="speeds">
+        <button class="btn spd" data-speed="0" title="Pause">&#10074;&#10074;</button>
+        <button class="btn spd" data-speed="0.5">&frac12;&times;</button>
+        <button class="btn spd active" data-speed="1">1&times;</button>
+        <button class="btn spd" data-speed="2">2&times;</button>
+        <button class="btn spd" data-speed="4">4&times;</button>
+        <button class="btn spd" data-speed="8">8&times;</button>
+      </div>
+      <div class="row"><span class="label">War day</span><span id="day" class="mono">&mdash;</span></div>
+    </section>
+
+    <section class="card hidden" id="war-card">
+      <h2 id="war-title">War Report</h2>
+      <div class="war-side red">
+        <div class="ws-head"><span class="dot"></span><span>Crimson Pact</span></div>
+        <div class="bar"><div id="bar-red-terr" class="bar-fill red"></div></div>
+        <div class="ws-stats">
+          <span>territory <b id="st-red-terr">100%</b></span>
+          <span>divisions <b id="st-red-div">0</b></span>
+          <span>reserves <b id="st-red-pool">0</b></span>
+          <span>casualties <b id="st-red-cas">0</b></span>
+        </div>
+      </div>
+      <div class="war-side blue">
+        <div class="ws-head"><span class="dot"></span><span>Azure League</span></div>
+        <div class="bar"><div id="bar-blue-terr" class="bar-fill blue"></div></div>
+        <div class="ws-stats">
+          <span>territory <b id="st-blue-terr">100%</b></span>
+          <span>divisions <b id="st-blue-div">0</b></span>
+          <span>reserves <b id="st-blue-pool">0</b></span>
+          <span>casualties <b id="st-blue-cas">0</b></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card grow">
+      <h2>Dispatches</h2>
+      <ul id="log"></ul>
+    </section>
+
+    <footer>
+      <p>Borders are single persistent objects &mdash; the very line you see at peace
+      is the line that buckles and bends as divisions clash along it.</p>
+    </footer>
+  </aside>
+</div>
+<script src="main.js"></script>
+</body>
+</html>

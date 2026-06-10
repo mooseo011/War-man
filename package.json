@@ -1,0 +1,15 @@
+{
+  "name": "frontlines",
+  "version": "1.0.0",
+  "description": "Fictional war simulator: procedurally generated world, persistent deformable borders, real-time autonomous wars.",
+  "main": "main.js",
+  "scripts": {
+    "test": "node test/headless.js",
+    "test:visual": "node test/screenshots.js",
+    "start": "python3 -m http.server 8000"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "playwright": "^1.57.0"
+  }
+}
